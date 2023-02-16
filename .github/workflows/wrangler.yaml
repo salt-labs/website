@@ -1,0 +1,157 @@
+##################################################
+# Name: wrangler.yaml
+# Description:
+#   A Workflow that builds a static website using
+#   Hugo before publishing to Cloudflare Workers
+#   with the Wrangler CLI
+##################################################
+
+name: Wrangler
+
+on:
+
+  # Automatically run anytime there
+  # is a push to the default branch
+  push:
+    branches:
+      - $default-branch
+      - master
+      - trunk
+      - draft/*
+
+  # Automatically run anytime a PR
+  # targets the default or draft
+  # branches for the defined types.
+  pull_request:
+    branches:
+      - $default-branch
+      - master
+      - trunk
+      - draft/*
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+      - review_requested
+
+  # Re-build every week to ensure
+  # the site still builds as external
+  # dependencies change.
+  schedule:
+    - cron: '0 0 * * 0'
+
+defaults:
+
+  run:
+    shell: bash
+
+env:
+
+  HUGO_VERSION: 0.89.5
+
+  HUGO_BASEURL_STAGING: "https://staging.saltlabs.tech/"
+  HUGO_BASEURL_PRODUCTION: "https://saltlabs.tech/"
+
+  WRANGLER_API_TOKEN: ${{ secrets.CLOUDFLARE_WORKERS_SALT_LABS_TECH }}
+
+jobs:
+
+  ##################################################
+  # Publish to Cloudflare Workers using the Wrangler CLI
+  ##################################################
+
+  deploy:
+
+    name: Publish website
+
+    runs-on: ${{ matrix.os }}
+
+    timeout-minutes: 30
+
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-latest
+
+    steps:
+
+      - id: checkout_repository
+        name: Checkout repository with submodules
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+          submodules: true
+          clean: true
+          persist-credentials: true
+
+      - id: get_branch
+        name: Get branch name
+        run: |
+          echo "##[set-output name=name;]${GITHUB_REF#refs/heads/}"
+          echo "Set Output NAME=${GITHUB_REF#refs/heads/}"
+
+      - id: hugo_install
+        name: Download and Install Hugo
+        run: |
+          wget https://github.com/gohugoio/hugo/releases/download/v${{ env.HUGO_VERSION }}/hugo_${{ env.HUGO_VERSION }}_Linux-64bit.deb
+          sudo dpkg -i hugo_${{ env.HUGO_VERSION }}_Linux-64bit.deb
+          hugo version
+
+      - id: hugo_cleanup
+        name: Remove unwanted Hugo files before build
+        run: |
+          rm -f themes/*/content/post/* || echo "Failed to remove posts from theme"
+          rm -f themes/*/data/authors/* || echo "Failed to remove authors from theme"
+          rm -rf static/images/backup || echo "Failed to remove extra images"
+
+      - id: hugo_build_staging
+        name: Build the website using Hugo (Staging)
+        if: |
+          startsWith( steps.get_branch.outputs.name, 'draft/' ) ||
+          startsWith( steps.get_branch.outputs.name, 'bug/' ) ||
+          startsWith( steps.get_branch.outputs.name, 'fix/' ) ||
+          startsWith( steps.get_branch.outputs.name, 'feat/' ) ||
+          github.event_name == 'pull_request'
+        env:
+          TZ: "Australia/Sydney"
+          BASEURL: "${{ env.HUGO_BASEURL_STAGING }}"
+        run: |
+          hugo --verbose --gc --minify --cleanDestinationDir --baseURL="$BASEURL"
+          touch public/.nojekyll
+          ls -la public/
+
+      - id: hugo_build_production
+        if: |
+          steps.get_branch.outputs.name == 'trunk'
+        name: Build the website using Hugo (Production)
+        env:
+          TZ: "Australia/Sydney"
+          BASEURL: "${{ env.HUGO_BASEURL_PRODUCTION }}"
+        run: |
+          hugo --verbose --gc --minify --cleanDestinationDir --baseURL="$BASEURL"
+          touch public/.nojekyll
+          ls -la public/
+
+      # Only 'draft/*' branches are pushed to the Staging website
+      - id: publish_website_staging
+        name: Publish website using Wrangler (Staging)
+        if: |
+          startsWith( steps.get_branch.outputs.name, 'draft/' ) &&
+          steps.hugo_build_staging.outcome == 'success'
+        uses: cloudflare/wrangler-action@2.0.0
+        with:
+          apiToken: ${{ env.WRANGLER_API_TOKEN }}
+          environment: staging
+
+      # Only 'master' branch is pushed to the Production website
+      - id: publish_website_production
+        name: Publish website using Wrangler (Production)
+        if: |
+          steps.get_branch.outputs.name == 'master' &&
+          steps.hugo_build_production.outcome == 'success'
+        uses: cloudflare/wrangler-action@2.0.0
+        with:
+          apiToken: ${{ env.WRANGLER_API_TOKEN }}
+          environment: production

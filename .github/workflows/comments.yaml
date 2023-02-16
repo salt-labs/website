@@ -1,0 +1,108 @@
+##################################################
+# Name: comments.yaml
+# Description:
+#   A Workflow that triggers on issue comments so
+#   they can be reviewed for spam.
+##################################################
+
+name: Comments
+
+on:
+
+  issue_comment:
+    types:
+      - created
+      - edited
+
+defaults:
+
+  run:
+    shell: bash
+
+jobs:
+
+  ##################################################
+  # Posts octocat images if a comment '/octocat'
+  ##################################################
+
+  octocat:
+
+    name: Octocat
+
+    runs-on: ${{ matrix.os }}
+
+    timeout-minutes: 5
+
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-latest
+    steps:
+
+      - id: octocat
+        name: Post image from Octodex
+        uses: ethomson/mona-action@master
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+  ##################################################
+  # Posts Giphy comments on '/giphy search_term'
+  ##################################################
+
+  giphy:
+
+    name: Giphy
+
+    runs-on: ${{ matrix.os }}
+
+    timeout-minutes: 5
+
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-latest
+    steps:
+
+      - id: giphy
+        name: Giphy image search
+        uses: iamhughes/giphy-generator@v1
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GIPHY_TOKEN: "${{ secrets.GIPHY_TOKEN }}"
+        with:
+          rating: 'PG-13' # G, PG, PG-13, R
+          lang: 'en'
+
+  ##################################################
+  # Send a notification to Telegram
+  ##################################################
+
+  telegram:
+
+    name: Telegram
+
+    runs-on: ${{ matrix.os }}
+
+    timeout-minutes: 5
+
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-latest
+    steps:
+
+      - id: telegram
+        name: Telegram notify
+        uses: appleboy/telegram-action@master
+        with:
+          format: markdown
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            The ${{ github.event_name }} was triggered in ${{ github.repository }} repository.
+
+            The comment is available to view [here](${{ github.event.comment.html_url }})
+

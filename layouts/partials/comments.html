@@ -1,0 +1,111 @@
+<script>
+
+    var debug = {{ .Site.Params.Debug }}
+    var org = {{ .Site.Params.GitHubOrg }}
+    var repo = {{ .Site.Params.GitHubRepo }}
+    var id = {{ .Params.GitHubIssueId }}
+
+    const github_url = "https://github.com"
+    const github_api = "https://api.github.com"
+
+    if ( debug ) {
+        {{ partial "log" .Site.Params.GitHubOrg }}
+        {{ partial "log" .Site.Params.GitHubRepo }}
+        {{ partial "log" .Params.GitHubIssuesId }}
+    }
+
+    if ( id )   {
+
+        console.log("Loading comments from GitHub issue " + id)
+
+        let url = [ github_url, org, repo, "issues", id ].join("/");
+        let api_url = [ github_api, "repos", org, repo, "issues", id, "comments" ].join("/")
+
+        var commentsDiv = document.getElementById("comments");
+
+        console.log("Pulling comments from " + api_url)
+
+        let xhr = new XMLHttpRequest();
+        xhr.responseType = "json";
+        xhr.open("GET", api_url);
+        xhr.setRequestHeader("Accept", "application/vnd.github.v3.html+json");
+        xhr.send();
+
+        xhr.onload = function() {
+
+            console.log("HTTP Status code " + xhr.status)
+
+            if (xhr.status != 200) {
+
+                let errorText = document.createElement("p");
+                errorText.innerHTML = "Comments for this post have not yet opened or you have GitHub scripts disabled.";
+                commentsDiv.appendChild(errorText);
+
+            } else {
+
+                let comments = xhr.response;
+
+                // If there was comments
+                if (typeof comments !== 'undefined' && comments.length > 0) {
+
+                    console.log("Processing " + comments.length + " comments from GitHub issue " + id)
+
+                    let mainHeader = document.createElement("h2");
+                    mainHeader.innerHTML = "Comments: ".concat(comments.length);
+                    commentsDiv.appendChild(mainHeader);
+
+                    let issueLink = document.createElement("p");
+                    issueLink.innerHTML = "You can leave a comment in this <a href='".concat(url, "'>GitHub issue</a>.");
+                    commentsDiv.appendChild(issueLink);
+
+                    // Loop over each comment and add to the HTML
+                    comments.forEach(function(comment) {
+
+                        let commentContent = document.createElement("div");
+                        commentContent.setAttribute('class', 'gh-comment')
+                        commentContent.innerHTML = "".concat(
+                            "<div class='gh-header'>",
+                                "<img src='", comment.user.avatar_url, "' />",
+                                "<div style='margin:auto 0;'>",
+                                    "<b><a class='gh-username' href='", comment.user.html_url, "'>", comment.user.login, "</a></b>",
+                                    " commented at ", new Date(comment.created_at),
+                                "</div>",
+                            "</div>",
+                            "<div class='gh-body'>",
+                                comment.body_html,
+                            "</div>"
+                        );
+                        commentsDiv.appendChild(commentContent);
+
+                    });
+
+                } else {
+
+                    console.log("There are no comments to load from GitHub issue " + id)
+
+                }
+
+            } // End status code check
+
+        } // End onload function
+
+        xhr.onerror = function() {
+
+            console.log("Error loading comments from GitHub")
+
+            let errorText = document.createElement("p");
+
+            errorText.innerHTML = "My bad, there was an error loading comments!";
+
+            commentsDiv.appendChild(errorText);
+
+        };
+
+    } else {
+
+        console.log("No GitHub issue was defined for this post")
+
+    }
+
+</script>
+
