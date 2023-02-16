@@ -1,0 +1,6 @@
+
+[submodule "themes/hugo.386"]
+	path = themes/hugo.386
+	#url = git@gitlab.com:maxlefou/hugo.386.git
+	url = https://gitlab.com/maxlefou/hugo.386.git
+	branch = master
