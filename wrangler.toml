@@ -19,13 +19,14 @@ workers_dev = false
 # Compatibility date for the Workers runtime.
 compatibility_date = "2023-02-25"
 
+# The entry point for your Worker.
+main = "workers-site/index.js"
+
 #########################
 [site]
 #########################
 
 bucket = "public"
-
-main = "workers-site/index.js"
 
 #########################
 [env.staging]

@@ -5,6 +5,6 @@
   "main": "index.js",
   "license": "Unlicense",
   "dependencies": {
-    "@cloudflare/kv-asset-handler": "~0.0.11"
+    "@cloudflare/kv-asset-handler": "0.3.0"
   }
 }
