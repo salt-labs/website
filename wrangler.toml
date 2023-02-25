@@ -41,15 +41,12 @@ bucket = "./public"
 [env.staging]
 #########################
 
-# Deploy to the workers.dev subdomain?
-workers_dev = false
-
-# The route where to use the worker (Personal domains)
+# The route where to use the worker
 # Ref: https://developers.cloudflare.com/workers/about/routes/
 routes = [
 
 	{ pattern = "staging.saltlabs.tech", custom_domain = true },
-	{ pattern = "staging.saltlabs.tech/*" },
+	{ pattern = "staging.saltlabs.tech/*", zone_name = "saltlabs.tech" },
 
 ]
 
@@ -57,17 +54,14 @@ routes = [
 [env.production]
 #########################
 
-# Deploy to the workers.dev subdomain?
-workers_dev = false
-
-# The route where to use the worker (Personal domains)
+# The route where to use the worker
 # Ref: https://developers.cloudflare.com/workers/about/routes/
 routes = [
 
 	{ pattern = "www.saltlabs.tech", custom_domain = true },
-	{ pattern = "www.saltlabs.tech/*" },
+	{ pattern = "www.saltlabs.tech/*", zone_name = "saltlabs.tech" },
 
 	{ pattern = "saltlabs.tech", custom_domain = true },
-	{ pattern = "saltlabs.tech/*" },
+	{ pattern = "saltlabs.tech/*", zone_name = "saltlabs.tech" },
 
 ]
