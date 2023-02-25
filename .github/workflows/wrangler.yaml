@@ -15,7 +15,6 @@ on:
   push:
     branches:
       - $default-branch
-      - master
       - trunk
 
   # Automatically run anytime a PR
@@ -24,7 +23,6 @@ on:
   pull_request:
     branches:
       - $default-branch
-      - master
       - trunk
     types:
       - opened
@@ -91,14 +89,14 @@ jobs:
       - id: get_branch
         name: Get branch name
         run: |
-          echo "##[set-output name=name;]${GITHUB_REF#refs/heads/}"
+          echo "{name}=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
           echo "Set Output NAME=${GITHUB_REF#refs/heads/}"
 
       - id: hugo_install
         name: Download and Install Hugo
         run: |
           wget https://github.com/gohugoio/hugo/releases/download/v${{ env.HUGO_VERSION }}/hugo_${{ env.HUGO_VERSION }}_linux-amd64.deb
-          sudo dpkg -i hugo_${{ env.HUGO_VERSION }}_Linux-64bit.deb
+          sudo dpkg -i hugo_${{ env.HUGO_VERSION }}_linux-amd64.deb
           hugo version
 
       - id: hugo_cleanup
@@ -147,11 +145,11 @@ jobs:
           apiToken: ${{ env.WRANGLER_API_TOKEN }}
           environment: staging
 
-      # Only 'master' branch is pushed to the Production website
+      # Only 'trunk' branch is pushed to the Production website
       - id: publish_website_production
         name: Publish website using Wrangler (Production)
         if: |
-          steps.get_branch.outputs.name == 'master' &&
+          steps.get_branch.outputs.name == 'trunk' &&
           steps.hugo_build_production.outcome == 'success'
         uses: cloudflare/wrangler-action@2.0.0
         with:
