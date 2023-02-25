@@ -26,13 +26,16 @@ main = "workers-site/index.js"
 usage_model = "bundled"
 
 # Send logs to the console.
-log_push = true
+logpush = true
 
 #########################
 [site]
 #########################
 
 bucket = "./public"
+
+#include = ["upload_dir"]
+#exclude = ["ignore_dir"]
 
 #########################
 [env.staging]
@@ -47,6 +50,10 @@ routes = [
 	{ pattern = "staging.saltlabs.tech", custom_domain = true },
 ]
 
+kv_namespaces = [
+  { binding = "website-saltlabs-staging>", id = "1cfa21d623f94c548401234063b77030" }
+]
+
 #########################
 [env.production]
 #########################
@@ -59,4 +66,8 @@ workers_dev = false
 routes = [
 	{ pattern = "www.saltlabs.tech", custom_domain = true },
 	{ pattern = "saltlabs.tech", custom_domain = true },
+]
+
+kv_namespaces = [
+  { binding = "website-saltlabs-production>", id = "911168d413a648cba7ca4cb989f93019" }
 ]
