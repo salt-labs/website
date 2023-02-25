@@ -142,7 +142,8 @@ footnoteAnchorPrefix: ""
 footnoteReturnLinkContent: ""
 
 # Google Analytics ID
-googleAnalytics: "UA-174657452-3"
+#googleAnalytics: "UA-174657452-3"
+googleAnalytics: "G-B13MVC0GN3"
 
 # Enable to auto-detect Chinese/Japanese/Korean languages
 hasCJKLanguage: false
