@@ -52,7 +52,7 @@ defaults:
 
 env:
 
-  HUGO_VERSION: 0.89.5
+  HUGO_VERSION: 0.110.0
 
   HUGO_BASEURL_STAGING: "https://staging.saltlabs.tech/"
   HUGO_BASEURL_PRODUCTION: "https://saltlabs.tech/"
@@ -99,7 +99,7 @@ jobs:
       - id: hugo_install
         name: Download and Install Hugo
         run: |
-          wget https://github.com/gohugoio/hugo/releases/download/v${{ env.HUGO_VERSION }}/hugo_${{ env.HUGO_VERSION }}_Linux-64bit.deb
+          wget https://github.com/gohugoio/hugo/releases/download/v${{ env.HUGO_VERSION }}/hugo_${{ env.HUGO_VERSION }}_linux-64bit.deb
           sudo dpkg -i hugo_${{ env.HUGO_VERSION }}_Linux-64bit.deb
           hugo version
 
