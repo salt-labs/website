@@ -47,11 +47,10 @@ workers_dev = false
 # The route where to use the worker (Personal domains)
 # Ref: https://developers.cloudflare.com/workers/about/routes/
 routes = [
-	{ pattern = "staging.saltlabs.tech", custom_domain = true },
-]
 
-kv_namespaces = [
-  { binding = "website-saltlabs-staging>", id = "1cfa21d623f94c548401234063b77030" }
+	{ pattern = "staging.saltlabs.tech", custom_domain = true },
+	{ pattern = "staging.saltlabs.tech/*" },
+
 ]
 
 #########################
@@ -64,10 +63,11 @@ workers_dev = false
 # The route where to use the worker (Personal domains)
 # Ref: https://developers.cloudflare.com/workers/about/routes/
 routes = [
-	{ pattern = "www.saltlabs.tech", custom_domain = true },
-	{ pattern = "saltlabs.tech", custom_domain = true },
-]
 
-kv_namespaces = [
-  { binding = "website-saltlabs-production>", id = "911168d413a648cba7ca4cb989f93019" }
+	{ pattern = "www.saltlabs.tech", custom_domain = true },
+	{ pattern = "www.saltlabs.tech/*" },
+
+	{ pattern = "saltlabs.tech", custom_domain = true },
+	{ pattern = "saltlabs.tech/*" },
+
 ]
