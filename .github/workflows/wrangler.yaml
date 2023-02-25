@@ -50,9 +50,6 @@ env:
 
   HUGO_VERSION: 0.110.0
 
-  HUGO_BASEURL_STAGING: "https://staging.saltlabs.tech/"
-  HUGO_BASEURL_PRODUCTION: "https://saltlabs.tech/"
-
   WRANGLER_API_TOKEN: ${{ secrets.CLOUDFLARE_WORKERS_SALT_LABS_TECH }}
 
   # Works on pushes or PRs
@@ -113,9 +110,8 @@ jobs:
           github.event_name == 'pull_request'
         env:
           TZ: "Australia/Sydney"
-          BASEURL: "${{ env.HUGO_BASEURL_STAGING }}"
         run: |
-          hugo --verbose --gc --minify --cleanDestinationDir --baseURL="$BASEURL"
+          hugo --verbose --gc --minify --cleanDestinationDir --environment staging
           touch public/.nojekyll
           ls -la public/
 
@@ -127,7 +123,7 @@ jobs:
           TZ: "Australia/Sydney"
           BASEURL: "${{ env.HUGO_BASEURL_PRODUCTION }}"
         run: |
-          hugo --verbose --gc --minify --cleanDestinationDir --baseURL="$BASEURL"
+          hugo --verbose --gc --minify --cleanDestinationDir --environment production
           touch public/.nojekyll
           ls -la public/
 
