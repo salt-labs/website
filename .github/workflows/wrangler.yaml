@@ -17,17 +17,15 @@ on:
       - $default-branch
       - master
       - trunk
-      - draft/*
 
   # Automatically run anytime a PR
-  # targets the default or draft
-  # branches for the defined types.
+  # targets the default branch
+  # for the defined types.
   pull_request:
     branches:
       - $default-branch
       - master
       - trunk
-      - draft/*
     types:
       - opened
       - reopened
@@ -99,7 +97,7 @@ jobs:
       - id: hugo_install
         name: Download and Install Hugo
         run: |
-          wget https://github.com/gohugoio/hugo/releases/download/v${{ env.HUGO_VERSION }}/hugo_${{ env.HUGO_VERSION }}_linux-64bit.deb
+          wget https://github.com/gohugoio/hugo/releases/download/v${{ env.HUGO_VERSION }}/hugo_${{ env.HUGO_VERSION }}_linux-amd64.deb
           sudo dpkg -i hugo_${{ env.HUGO_VERSION }}_Linux-64bit.deb
           hugo version
 
