@@ -45,6 +45,7 @@ bucket = "./public"
 # Ref: https://developers.cloudflare.com/workers/about/routes/
 routes = [
 
+	{ pattern = "staging.saltlabs.tech", custom_domain = true },
 	{ pattern = "staging.saltlabs.tech/*", zone_name = "saltlabs.tech" },
 
 ]
