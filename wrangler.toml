@@ -22,11 +22,17 @@ compatibility_date = "2023-02-25"
 # The entry point for your Worker.
 main = "workers-site/index.js"
 
+# Usage model for the Worker (bundled or unbound)
+usage_model = "bundled"
+
+# Send logs to the console.
+log_push = true
+
 #########################
 [site]
 #########################
 
-bucket = "public"
+bucket = "./public"
 
 #########################
 [env.staging]
