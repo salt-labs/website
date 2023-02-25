@@ -10,22 +10,22 @@
 # The name of the Worker script.
 name = "website-saltlabs"
 
-# How wrangler will build the Project.
-# webpack, javascript, rust
-type = "webpack"
-
 # The account id that matches the worker
 account_id = "6d6a8fb1f9f3f38b7374d4974c0743cf"
 
 # Deploy to the workers.dev subdomain?
 workers_dev = false
 
+# Compatibility date for the Workers runtime.
+compatibility_date = "2023-02-25"
+
 #########################
 [site]
 #########################
 
 bucket = "public"
-entry-point = "workers-site"
+
+main = "workers-site/index.js"
 
 #########################
 [env.staging]
@@ -33,9 +33,6 @@ entry-point = "workers-site"
 
 # Deploy to the workers.dev subdomain?
 workers_dev = false
-
-# The zone ID to run the script on (Personal domains)
-zone_id = "0a1e8df1e89d38193ee0f1efeb7613e1"
 
 # The route where to use the worker (Personal domains)
 # Ref: https://developers.cloudflare.com/workers/about/routes/
@@ -47,9 +44,6 @@ routes = [ "staging.saltlabs.tech/*" ]
 
 # Deploy to the workers.dev subdomain?
 workers_dev = false
-
-# The zone ID to run the script on (Personal domains)
-zone_id = "0a1e8df1e89d38193ee0f1efeb7613e1"
 
 # The route where to use the worker (Personal domains)
 # Ref: https://developers.cloudflare.com/workers/about/routes/
