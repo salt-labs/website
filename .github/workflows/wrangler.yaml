@@ -139,7 +139,7 @@ jobs:
           steps.hugo_build_staging.outcome == 'success'
         uses: cloudflare/wrangler-action@2.0.0
         with:
-          preCommand: |
+          preCommands: |
             npm --prefix workers-site install
           apiToken: ${{ env.WRANGLER_API_TOKEN }}
           environment: staging
@@ -152,7 +152,7 @@ jobs:
           steps.hugo_build_production.outcome == 'success'
         uses: cloudflare/wrangler-action@2.0.0
         with:
-          preCommand: |
+          preCommands: |
             npm --prefix workers-site install
           apiToken: ${{ env.WRANGLER_API_TOKEN }}
           environment: production
