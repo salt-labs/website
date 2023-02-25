@@ -26,7 +26,7 @@ main = "workers-site/index.js"
 usage_model = "bundled"
 
 # Send logs to the console.
-logpush = true
+logpush = false
 
 #########################
 [site]
@@ -45,7 +45,6 @@ bucket = "./public"
 # Ref: https://developers.cloudflare.com/workers/about/routes/
 routes = [
 
-	{ pattern = "staging.saltlabs.tech", custom_domain = true },
 	{ pattern = "staging.saltlabs.tech/*", zone_name = "saltlabs.tech" },
 
 ]
