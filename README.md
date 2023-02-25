@@ -7,7 +7,7 @@ This repository contains the source files for [Salt Labs](https://saltlabs.tech)
 1. Modify the source files
 2. Merge into the trunk branch repo
 3. Wait for the GitHub Actions to work it's magic
-4. Profit, the website is now available via CloudFlare Workers.
+4. Profit, the website is now available via Cloudflare Workers.
 
 ## How to add comments
 
