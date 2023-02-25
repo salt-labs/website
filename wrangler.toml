@@ -37,7 +37,9 @@ workers_dev = false
 
 # The route where to use the worker (Personal domains)
 # Ref: https://developers.cloudflare.com/workers/about/routes/
-routes = [ "staging.saltlabs.tech/*" ]
+routes = [
+	{ pattern = "staging.saltlabs.tech", custom_domain = true },
+]
 
 #########################
 [env.production]
@@ -48,4 +50,7 @@ workers_dev = false
 
 # The route where to use the worker (Personal domains)
 # Ref: https://developers.cloudflare.com/workers/about/routes/
-routes = [ "saltlabs.tech/*", "www.saltlabs.tech/*" ]
+routes = [
+	{ pattern = "www.saltlabs.tech", custom_domain = true },
+	{ pattern = "saltlabs.tech", custom_domain = true },
+]

@@ -139,10 +139,11 @@ jobs:
           steps.hugo_build_staging.outcome == 'success'
         uses: cloudflare/wrangler-action@2.0.0
         with:
+          environment: staging
+          apiToken: ${{ env.WRANGLER_API_TOKEN }}
           preCommands: |
             npm --prefix workers-site install
-          apiToken: ${{ env.WRANGLER_API_TOKEN }}
-          environment: staging
+          command: publish
 
       # Only 'trunk' branch is pushed to the Production website
       - id: publish_website_production
@@ -152,7 +153,8 @@ jobs:
           steps.hugo_build_production.outcome == 'success'
         uses: cloudflare/wrangler-action@2.0.0
         with:
+          environment: production
+          apiToken: ${{ env.WRANGLER_API_TOKEN }}
           preCommands: |
             npm --prefix workers-site install
-          apiToken: ${{ env.WRANGLER_API_TOKEN }}
-          environment: production
+          command: publish
