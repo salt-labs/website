@@ -50,7 +50,7 @@ env:
 
   HUGO_VERSION: 0.110.0
 
-  WRANGLER_API_TOKEN: ${{ secrets.CLOUDFLARE_WORKERS_SALT_LABS_TECH }}
+  WRANGLER_API_TOKEN: ${{ secrets.CLOUDFLARE_WORKERS }}
 
   # Works on pushes or PRs
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
