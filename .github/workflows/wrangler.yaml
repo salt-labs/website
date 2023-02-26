@@ -39,7 +39,7 @@ on:
 
 permissions:
   contents: read
-  pull-requests: read
+  pull-requests: write
 
 defaults:
 
@@ -89,8 +89,8 @@ jobs:
       - id: hugo_install
         name: Download and Install Hugo
         run: |
-          wget https://github.com/gohugoio/hugo/releases/download/v${{ env.HUGO_VERSION }}/hugo_${{ env.HUGO_VERSION }}_linux-amd64.deb
-          sudo dpkg -i hugo_${{ env.HUGO_VERSION }}_linux-amd64.deb
+          wget https://github.com/gohugoio/hugo/releases/download/v${{ env.HUGO_VERSION }}/hugo_extended_${{ env.HUGO_VERSION }}_linux-amd64.deb
+          sudo dpkg -i hugo_extended_${{ env.HUGO_VERSION }}_linux-amd64.deb
           hugo version
 
       - id: hugo_cleanup
@@ -121,7 +121,6 @@ jobs:
         name: Build the website using Hugo (Production)
         env:
           TZ: "Australia/Sydney"
-          BASEURL: "${{ env.HUGO_BASEURL_PRODUCTION }}"
         run: |
           hugo --verbose --gc --minify --cleanDestinationDir --environment production
           touch public/.nojekyll
@@ -154,3 +153,33 @@ jobs:
           preCommands: |
             npm --prefix workers-site install
           command: publish --env production
+
+  ##################################################
+  # Giphy thumbs up or down
+  ##################################################
+
+  check:
+
+    name: PR Status Checks
+
+    runs-on: ${{ matrix.os }}
+
+    timeout-minutes: 30
+
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-latest
+
+    needs: deploy
+
+    steps:
+
+      - name: PR Status Giphy
+        id: pr-status-giphy
+        uses: dgteixeira/pr-status-giphy-action@v2
+        if: github.event_name == 'pull_request'
+        env:
+          GIPHY_API_KEY: ${{ secrets.GIPHY_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
