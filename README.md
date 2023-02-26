@@ -25,3 +25,13 @@ GitHubIssueId = 1
 ```
 
 Any comments to that GitHub issue are then loaded automatically onto the website.
+
+## Updates
+
+When updating the website don't forget to update the submodules and Cloudflare Workers.
+
+```bash
+git submodule update --remote
+
+npm --prefix workers-site update
+```
