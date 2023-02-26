@@ -8,7 +8,7 @@ tags = [
     "text",
     "time",
 ]
-GitHubIssueId = 1
+GitHubIssueId = 10
 +++
 
 Well, the first step of creating a website is done.
