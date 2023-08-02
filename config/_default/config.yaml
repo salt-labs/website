@@ -451,6 +451,7 @@ params:
   twitter: "https://twitter.com/MAHDTecher"
   github: "https://github.com/MAHDTech"
   gitlab: "https://gitlab.com/MAHDTech"
+  docs: "https://docs.saltlabs.tech"
 
   loadfastload: false
   loadspeedfactor: 1
