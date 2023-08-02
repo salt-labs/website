@@ -65,7 +65,7 @@
                         commentContent.setAttribute('class', 'gh-comment')
                         commentContent.innerHTML = "".concat(
                             "<div class='gh-header'>",
-                                "<img src='", comment.user.avatar_url, "' />",
+                                "<img src='", comment.user.avatar_url, "', width='100' height='100' />",
                                 "<div style='margin:auto 0;'>",
                                     "<b><a class='gh-username' href='", comment.user.html_url, "'>", comment.user.login, "</a></b>",
                                     " commented at ", new Date(comment.created_at),
@@ -108,4 +108,3 @@
     }
 
 </script>
-

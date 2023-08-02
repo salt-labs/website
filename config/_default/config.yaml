@@ -57,6 +57,9 @@ contentDir: content
 
 Copyright: Salt Labs
 
+# Disable fast rendering.
+disableFastRender: true
+
 # The data directory
 dataDir: data
 
@@ -416,7 +419,7 @@ watch: true
 ##################################################
 
 params:
-  debug: false
+  debug: true
 
   # Comments
   # NOTE: Using GitHub requires a 'GitHubId' with the issue Id defined in each post
@@ -427,11 +430,10 @@ params:
   mainpagetitle: Salt Labs
 
   # Main page subtitle
-  mainpagesubtitle: Home of the saltiest developers around
+  mainpagesubtitle:
 
   # Main page description
-  mainpagedesc: >-
-    Home to a collection of abandoned open source projects.
+  mainpagedesc: Home to a collection of abandoned open source projects from the saltiest developers around.
 
   copyrightname: Salt Labs
   copyrighturl: "https://saltlabs.tech"
@@ -441,9 +443,18 @@ params:
   github: "https://github.com/MAHDTech"
   gitlab: "https://gitlab.com/MAHDTech"
 
-  loadfastload: false
-  loadspeedfactor: 1
+  # Flyby cursor.
   loadonepass: false
+
+  # Show a CRT screen effect (increases CPU usage)
+  showcrt: true
+
+  # Enabled or disables loading animations.
+  loadfastload: false
+
+  # Set the speed for the page load.
+  loadspeedfactor: 1.0
+
   copyright:
     name: Salt Labs
     url: "https://saltlabs.tech"
@@ -451,22 +462,21 @@ params:
     #suffix: Salt Labs
 
 menu:
-  #main:
+  main:
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 10
 
-  - identifier: about
-    name: About
-    url: /about/
-    weight: 10
+    #- identifier: posts
+    #  name: Posts
+    #  url: /post/
+    #  weight: 20
 
-  - identifier: posts
-    name: Posts
-    url: /post/
-    weight: 20
-
-  - identifier: docs
-    name: Docs
-    url: https://docs.saltlabs.tech
-    weight: 30
+    - identifier: docs
+      name: Docs
+      url: https://docs.saltlabs.tech
+      weight: 100
 
 taxonomies:
   category: categories

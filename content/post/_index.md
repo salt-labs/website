@@ -1,6 +1,12 @@
-+++
-aliases = ["posts","articles","blog","showcase","docs"]
-title = "Posts"
-author = "MAHDTech"
-tags = ["index"]
-+++
+---
+title: "Posts"
+author: "MAHDTech"
+tags:
+  - "index"
+aliases:
+  - "posts"
+  - "articles"
+  - "blog"
+  - "showcase"
+  - "docs"
+---
