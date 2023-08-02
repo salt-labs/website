@@ -4,3 +4,8 @@
 	#url = git@gitlab.com:maxlefou/hugo.386.git
 	url = https://gitlab.com/maxlefou/hugo.386.git
 	branch = master
+
+[submodule ".linters"]
+	path = .linters
+	url = git@github.com:salt-labs/linters.git
+	branch = trunk
