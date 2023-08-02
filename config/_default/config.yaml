@@ -466,6 +466,7 @@ menu:
   - identifier: docs
     name: Docs
     url: https://docs.saltlabs.tech
+    weight: 30
 
 taxonomies:
   category: categories
