@@ -1,5 +1,4 @@
 ---
-
 ##################################################
 # Hugo
 ##################################################
@@ -57,6 +56,9 @@ DisqusShortName: ""
 contentDir: content
 
 Copyright: Salt Labs
+
+# Disable fast rendering.
+disableFastRender: true
 
 # The data directory
 dataDir: data
@@ -116,7 +118,6 @@ enableRobotsTXT: true
 
 # Front Matter configuration
 frontmatter:
-
   date:
     - date
     - publishDate
@@ -149,7 +150,6 @@ hasCJKLanguage: false
 
 # Image processing configuration
 imaging:
-
   # Resample filter
   # Ref: https://github.com/disintegration/imaging
   resampleFilter: box
@@ -165,7 +165,6 @@ imaging:
 
   # EXIF config
   exif:
-
     includeFields: ""
 
     excludeFields: ""
@@ -178,7 +177,6 @@ imaging:
 
 # Language configuration
 languages:
-
   en:
     params:
       linkedin:
@@ -205,7 +203,6 @@ logFile: "hugo.log"
 
 # Markup configuration
 markup:
-
   asciidocExt:
     attributes: {}
     backend: html5
@@ -293,7 +290,6 @@ markup:
 
 # Minify configuration
 minify:
-
   disableCSS: false
   disableHTML: false
   disableJS: false
@@ -350,11 +346,9 @@ publishDir: public
 
 # Related configuration
 related:
-
   includeNewer: false
 
   indices:
-
     - name: keywords
       weight: 100
 
@@ -383,7 +377,6 @@ sectionPagesMenu: main
 
 # Sitemap configuration
 sitemap:
-
   changefreq: monthly
   filename: sitemap.xml
   priority: 0.5
@@ -410,7 +403,7 @@ Title: Salt Labs
 titleCaseStyle: AP
 
 # if true, use /filename.html instead of /filename/
-uglyURLs:  false
+uglyURLs: false
 
 # verbose output
 verbose: true
@@ -426,7 +419,6 @@ watch: true
 ##################################################
 
 params:
-
   debug: false
 
   # Comments
@@ -438,11 +430,10 @@ params:
   mainpagetitle: Salt Labs
 
   # Main page subtitle
-  mainpagesubtitle: Home of the saltiest developers around
+  mainpagesubtitle:
 
   # Main page description
-  mainpagedesc: >-
-    Home to a collection of abandoned open source projects.
+  mainpagedesc: Home to a collection of abandoned open source projects from the saltiest developers around.
 
   copyrightname: Salt Labs
   copyrighturl: "https://saltlabs.tech"
@@ -451,11 +442,19 @@ params:
   twitter: "https://twitter.com/MAHDTecher"
   github: "https://github.com/MAHDTech"
   gitlab: "https://gitlab.com/MAHDTech"
-  docs: "https://docs.saltlabs.tech"
 
-  loadfastload: false
-  loadspeedfactor: 1
+  # Flyby cursor.
   loadonepass: false
+
+  # Show a CRT screen effect (increases CPU usage)
+  showcrt: false
+
+  # Enabled or disables loading animations.
+  loadfastload: false
+
+  # Set the speed for the page load.
+  loadspeedfactor: 1.0
+
   copyright:
     name: Salt Labs
     url: "https://saltlabs.tech"
@@ -463,27 +462,28 @@ params:
     #suffix: Salt Labs
 
 menu:
-
-  #main:
-
+  main:
     - identifier: about
       name: About
       url: /about/
       weight: 10
 
-    - identifier: posts
-      name: Posts
-      url: /post/
-      weight: 20
+    #- identifier: posts
+    #  name: Posts
+    #  url: /post/
+    #  weight: 20
+
+    - identifier: docs
+      name: Docs
+      url: https://docs.saltlabs.tech
+      weight: 100
 
 taxonomies:
-
   category: categories
 
   tag: tags
 
 privacy:
-
   vimeo:
     disabled: false
     simple: true
@@ -502,7 +502,6 @@ privacy:
     privacyEnhanced: true
 
 services:
-
   instagram:
     disableInlineCSS: true
 

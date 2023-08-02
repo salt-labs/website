@@ -3,7 +3,7 @@
 	path = themes/hugo.386
 	#url = git@gitlab.com:maxlefou/hugo.386.git
 	url = https://gitlab.com/maxlefou/hugo.386.git
-	branch = master
+	branch = v3
 
 [submodule ".linters"]
 	path = .linters
