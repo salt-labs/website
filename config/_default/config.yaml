@@ -419,7 +419,7 @@ watch: true
 ##################################################
 
 params:
-  debug: true
+  debug: false
 
   # Comments
   # NOTE: Using GitHub requires a 'GitHubId' with the issue Id defined in each post
@@ -447,7 +447,7 @@ params:
   loadonepass: false
 
   # Show a CRT screen effect (increases CPU usage)
-  showcrt: true
+  showcrt: false
 
   # Enabled or disables loading animations.
   loadfastload: false
