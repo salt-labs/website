@@ -433,7 +433,7 @@ params:
   mainpagesubtitle:
 
   # Main page description
-  mainpagedesc: Home to a collection of abandoned open source projects from the saltiest developers around.
+  mainpagedesc: Home to a collection of abandoned open source projects.
 
   copyrightname: Salt Labs
   copyrighturl: "https://saltlabs.tech"
@@ -458,7 +458,7 @@ params:
   copyright:
     name: Salt Labs
     url: "https://saltlabs.tech"
-    prefix: "[Resume](https://mahdtech.com/resume)"
+    prefix: "[Resume](https://flowcv.com/resume/4ff0qgvujb)"
     #suffix: Salt Labs
 
 menu:
